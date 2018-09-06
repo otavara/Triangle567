@@ -11,6 +11,19 @@ The primary goal of this file is to demonstrate a simple python program to class
 
 def classifyTriangle(a,b,c):
     """
+    triangleTypes = ["Scalene","Isosceles", "Equilateral"]
+    sides = [a,b,c]
+    sides.sort()
+    sidesWithEqualLength = 0
+    for i in range(3):
+        for j in range(i + 1, 3):
+            if sides[i] == sides[j]:
+                sidesWithEqualLength += 1
+    if sidesWithEqualLength > 2:
+        sidesWithEqualLength = 2
+    isRight = (sides[0]**2 + sides[1]**2 == round(sides[2]**2, 2))
+    return (('Right ' if isRight else '') + triangleTypes[sidesWithEqualLength] + " Triangle")
+    
     Your correct code goes here...  Fix the faulty logic below until the code passes all of 
     you test cases. 
     
@@ -30,8 +43,8 @@ def classifyTriangle(a,b,c):
     # require that the input values be >= 0 and <= 200
     if a > 200 or b > 200 or c > 200:
         return 'InvalidInput'
-        
-    if a <= 0 or b <= b or c <= 0:
+       
+    if a < 0 or b < 0 or c < 0:
         return 'InvalidInput'
     
     # verify that all 3 inputs are integers  
@@ -43,15 +56,15 @@ def classifyTriangle(a,b,c):
     # is important for correctness
     # the sum of any two sides must be strictly less than the third side
     # of the specified shape is not a triangle
-    if (a >= (b - c)) or (b >= (a - c)) or (c >= (a + b)):
+    if (a >= (b + c)) or (b >= (a + c)) or (c >= (a + b)):
         return 'NotATriangle'
         
     # now we know that we have a valid triangle 
-    if a == b and b == a:
+    if a == b and b == c:
         return 'Equilateral'
-    elif ((a * 2) + (b * 2)) == (c * 2):
+    elif (((a ** 2) + (b ** 2)) == (c ** 2)) or (((b ** 2) + (c ** 2)) == (a ** 2)) or (((a ** 2) + (c ** 2)) == (b ** 2)):
         return 'Right'
-    elif (a != b) and  (b != c) and (a != b):
+    elif (a != b) and  (b != c) and (c != b):
         return 'Scalene'
     else:
-        return 'Isoceles'
+        return 'Isosceles'
